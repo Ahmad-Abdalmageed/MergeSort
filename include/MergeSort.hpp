@@ -13,4 +13,9 @@
 
 typedef  std::vector<int> IntVector1D ;
 
+IntVector1D MergeSort(IntVector1D src);
+IntVector1D SplitVec(const IntVector1D& src, int IdxStart, int IdxEnd);
+void PrintVec(const IntVector1D &src);
+IntVector1D Merge(IntVector1D left, IntVector1D right);
+
 #endif //MERGESORT_MERGESORT_HPP
