@@ -6,17 +6,17 @@
 
 #include "../include/MergeSort.hpp"
 
-IntVector1D MergeSort(IntVector1D src){
+IntVector1D MergeSort(IntVector1D src, int &cnvs){
     if(src.size() == 1){
         return src;
     }
     int start = 0;
     int end = (int) src.size() - 1;
     int mid = (end - start) / 2;
-    IntVector1D LVector = MergeSort(SplitVec(src, 0, mid));
-    IntVector1D RVector = MergeSort(SplitVec(src, mid+1, end));
+    IntVector1D LVector = MergeSort(SplitVec(src, 0, mid), cnvs);
+    IntVector1D RVector = MergeSort(SplitVec(src, mid+1, end), cnvs);
 
-    IntVector1D out = Merge(LVector, RVector);
+    IntVector1D out = Merge(LVector, RVector, cnvs);
     return out;
 }
 /*
@@ -34,18 +34,19 @@ IntVector1D SplitVec(const IntVector1D& src, int IdxStart, int IdxEnd){
 /*
  * Merge Two Arrays in a Sorted Manner
  */
-IntVector1D Merge(IntVector1D left, IntVector1D right){
+IntVector1D Merge(IntVector1D left, IntVector1D right, int &cnvs){
     int size = (int)(left.size() + right.size());
     int count = 0;
     IntVector1D out(size);
 
     while (count < size){
-        if(left[0] < right[0] && !left.empty()){
+        if(left[0] <= right[0] && !left.empty()){
             out[count] = left[0];
             left.erase(left.begin());
         } else if (right[0] < left[0] && !right.empty()){
             out[count] = right[0];
             right.erase((right.begin()));
+            cnvs = cnvs + left.size();
         } else {
             if (!left.empty()){
                 for(int i : left){
